@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>let和const</title>
+</head>
+<body>
+<script>
+    (function () {
+        //一. let
+        //1. 基本用法: 声明变量。变量只在let命令所在的代码块内有效。
+        /*{
+            let a = 1;
+            var b = 2;
+        }
+        console.log(a);
+        console.log(b);*/
+        //for循环计数器很合适使用let命令
+        /*for (let i=0;i<5;i++){
+            console.log(i);
+        }
+        console.log(i);*/
+//        var a = [];
+//        for (var i=0;i<5;i++){
+//            a[i] = function () {
+//                console.log(i);
+//            }
+//        }
+//        a[3]();//全局只有一个变量i
+
+//        var a = [];
+//        for (let i=0;i<5;i++){
+//            a[i] = function () {
+//                console.log(i);
+//            }
+//        }
+//        a[3]();//全局只有一个变量i
+        //for循环特别: 设置循环变量的部分是一个父作用域，循环体内部是一个单独的子作用域。
+        /*for (let i=0;i<3;i++){
+            //let i = "abc";
+            console.log(i);
+        }*/
+//        {
+//            let i = "abc";
+//            {
+//                let i = 1;
+//                console.log(i);
+//            }
+//            console.log(i);
+//        }
+        //let声明的变量一定要在声明后使用，否则报错
+//        console.log(foo);
+//        var foo = 2;
+//        console.log(l);
+//        let l = 3;
+        //块级作用域内存在let命令，所声明的变量就绑定该区域，不再受外部的影响。
+        /*var tmp = 123;
+        if (true){
+            tmp = 'abc';
+            console.log(tmp);
+            let tmp = "a";
+        }*/
+    })()
+</script>
+</body>
+</html>
