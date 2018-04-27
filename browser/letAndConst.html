@@ -60,6 +60,35 @@
             console.log(tmp);
             let tmp = "a";
         }*/
+        /*function tdz(x = y,y = 2) {//y未声明，属于死区
+            console.log(x+":"+y);
+        }
+        tdz();*/
+        /*function again() {
+            let a = 1;
+            let a = 2;
+            console.log(a);
+        }
+        again();*/
+        /*function f() {console.log("I am outside!")}
+        (function () {
+            if (false){
+                function f() {console.log("I am inside!")}
+            }
+            f();
+        })();*/
+        /*function f() { console.log('I am outside!'); }
+
+        (function () {
+            if (true) {
+                console.log(f);
+                function f() { console.log('I am inside!'); }
+            }
+        }());*/
+        const a = [];
+        a.push("a");
+        a.length = 3;
+        console.log(a);
     })()
 </script>
 </body>

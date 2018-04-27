@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>解构赋值</title>
+</head>
+<body>
+<script>
+    (function () {
+        //1. 数组解构赋值
+        /*let [a,b,c] = [1,2,3];
+        console.log(a+":"+b+":"+c);
+        let [,,d] = ["a","b","c"];
+        console.log(d);
+        let [h,...t] = [1,2,3,4];
+        let [x,y,...z] = ['a'];
+        console.log(h+":"+t);
+        console.log(x+":"+y+":"+z);*/
+        //不完全解构
+        /*let [a,[b],d] = [1,[2,3],4];
+        console.log(a+":"+b+":"+d);
+        let [x] = 1;
+        console.log(x);*/
+        //只要数据结构具有Iterator接口都可采用数组形式的解构赋值
+        /*let [a,b,c] = new Set(['a','b','c']);
+        console.log(a+":"+b+":"+c);*/
+        //2 默认值
+        //(1)严格等于undefined, 默认值才会生效
+        /*let [x=1] = [undefined];
+        console.log(x);
+        let [y=1] = [null];
+        console.log(y);*/
+        //2. 惰性求值
+        /*function f() {
+            console.log("fff");
+            return "a";
+        }
+        let [x = f()] = [undefined];
+        console.log(x);*/
+        //数组的元素是按次序排列的，变量的取值由它的位置决定；对象的属性没有次序，变量必须与属性同名才能取到正确的值。
+        /*let obj = {first:"hello", last:"world"};
+        let {first:f,last:l} = obj;
+        console.log(f+l);
+        console.log(first);*/
+        /*let obj = {p:["hello",{y:"world"}]};
+        let {p,p:[x,{y}]} = obj;
+        console.log(p);
+        console.log(x);
+        console.log(y);*/
+        /*let {p,p:x} = {p:true,x:false};
+        console.log(p);
+        console.log(x);
+
+        let arr = [1,2,3];
+        let {0:first, [arr.length-1]:last} = arr;
+        console.log(first+":"+last);
+        let [a,b,c,d,e] = "hello";
+        console.log(a);*/
+        //为函数move的参数指定默认值，而不是为变量x和y指定默认值
+        function move({x, y} = { x: 0, y: 0 }) {
+            console.log(x+":"+y);
+            return [x, y];}
+        move({x: 3, y: 8});
+        move({x: 3});
+        move({});
+        move();
+    })()
+</script>
+</body>
+</html>
