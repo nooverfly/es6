@@ -17,7 +17,34 @@
         let a = 15, b = Infinity;
         console.log(Number.isFinite(a));
         console.log(Number.isFinite(b));
-        console.log(Number.isFinite("a"));*/
+        console.log(Number.isFinite("a"));
+        console.log(Number.isNaN(NaN));
+        console.log(Number.isNaN(15));
+        console.log(Number.isNaN("15"));
+        console.log(Number.isNaN('true'/0));
+        console.log(Number.isNaN('true'/'true'));
+        isFinite(25);
+        isFinite("25");
+        Number.isFinite(25);
+        Number.isFinite("25");
+        console.log(Number.isInteger(25));
+        console.log(Number.isInteger(25.1));
+        console.log(Number.isInteger(25.0));
+        console.log(Number.isInteger("a"));
+        console.log(Number.isInteger(3.0000000000000002));
+        console.log(Number.isInteger(5E-324));
+        console.log(Number.isInteger(5E-325));
+        console.log(Number.EPSILON);
+        console.log(9007199254740993 - 990);
+        console.log(Number.isSafeInteger(9007199254740993 - 990));*/
+
+        //Math对象的扩展
+        //1.Math.trunc()
+
+        //2. Math.sign(): 判断一个数到底是正数、负数、还是零
+
+        //指数运算符**
+        console.log(2**3);
     })();
 </script>
 </body>
