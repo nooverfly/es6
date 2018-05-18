@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象的扩展</title>
+</head>
+<body>
+<script>
+    (function () {
+        //1. 属性的简洁表示法
+        /*const foo = "bar";
+        const baz = {foo};
+        console.log(baz);
+        const o = {
+            method(){
+                console.log("hello");
+            }
+        };
+        o.method();*/
+        //2. 属性名表达式
+        //ES6允许字面量定义对象时，用表达式作为对象的属性名，即把表达式放在方括号内。
+        /*let propKey = 'foo';
+        let obj = {
+            [propKey]: true,
+            ['a'+'bc']:123
+        };
+        console.log(obj);*/
+
+        //3. 方法的name属性
+        //如果对象的方法使用取值函数（getter）和存值函数（setter），则name属性不是在该方法上面
+        //而是该方法的属性的描述对象的get和set属性上面，返回值是方法名前加上get和set
+        /*const obj = {
+            get foo(){},
+            set foo(x){}
+        };
+        const desc = Object.getOwnPropertyDescriptor(obj,'foo');
+        console.log(desc.get.name);
+        console.log(desc.set.name);*/
+
+        //4. Object.is()
+        /*console.log(+0 === -0);
+        console.log(NaN === NaN);
+        console.log(Object.is(+0,-0));
+        console.log(Object.is(NaN,NaN));*/
+
+        //5. Object.assign()
+        /*const v1 = 'abc';
+        const v2 = 'def';
+        const v3 = true;
+        const v4 = 10;
+        const v5 = {foo:"baz"};
+        const obj = Object.assign({},v1,v2,v3,v4,v5);
+        console.log(obj);
+        let target = {a:{b:"c",d:"e"}},
+            source = {a:{b:"hello"}};
+        Object.assign(target,source);
+        console.log(target);
+        source.a.b = "world";
+        console.log(target);
+        let target = {};
+        let source = {
+            foo:"baz",
+            get f() {
+                return 1;
+            }};
+        Object.assign(target,source);
+        console.log(target);*/
+
+        //6.属性的可枚举性和遍历
+
+        //属性的遍历
+        let keys = Reflect.ownKeys({[Symbol()]:0, b:0, 10:0, 2:0, a:0});
+        console.log(keys);
+    })()
+</script>
+</body>
+</html>

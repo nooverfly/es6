@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proxy</title>
+</head>
+<body>
+<script>
+    (function () {
+        //一.概述
+        //在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截
+        /*var obj = new Proxy({},{
+            get: function (target,key,receiver) {
+                console.log(`getting ${key}!`);
+                return Reflect.get(target, key, receiver);
+            },
+            set: function (target, key, value, receiver) {
+                console.log(`setting ${key}!`);
+                return Reflect.set(target, key, value, receiver);
+            }
+        });
+        obj.count = 1;
+        ++obj.count;*/
+        
+        //二. Proxy实例的方法
+        
+        //1. get()
+        /*let person = {name:"admin"};
+        let proxy = new Proxy(person,{
+            get: function (target, p) {
+                if (p in target) {
+                    return target[p];
+                }else {
+                    throw new ReferenceError("Property \""+p+"\" does not exist");
+                }
+            }
+        });
+        console.log(proxy.name);
+        console.log(proxy.age);*/
+        //如果一个属性不可配置和不可写，则该属性不能被代理，通过 Proxy 对象访问该属性会报错。
+        /*let target = Object.defineProperties({},{
+            foo: {
+                value: 123,
+                writable: false,
+                configurable: false
+            }
+        });
+        let proxy = new Proxy(target, {
+            get(target, propKey){
+                return 'abc';
+            }
+        });
+        console.log(proxy.foo);*/
+
+        //apply()
+        /*let target = function () {
+            return "I am the target";
+        };
+        let handler = {
+            apply: function () {
+                return "I am the proxy";
+            }
+        };
+        let p = new Proxy(target, handler);
+        console.log(p());*/
+        /*let twice = {
+            apply(target, ctx, args) {
+                return Reflect.apply(...arguments) * 2;
+            }
+        };
+        function sum(left, right) {
+            return left + right;
+        }
+        let proxy = new Proxy(sum, twice);
+        console.log(proxy(1,2));
+        console.log(proxy.call(null, 5, 6));
+        console.log(proxy.apply(null,[7,8]));*/
+
+        //has()
+        /*let handler = {
+            has(target, key){
+                if (key[0] === '_'){
+                    return false;
+                }
+                return key in target;
+            }
+        };
+        let target = {_prop:'foo', prop:'poo'};
+        let proxy = new Proxy(target,handler);
+        console.log('_prop' in proxy);
+        console.log('prop' in proxy);*/
+        //如果原对象不可配置或者禁止扩展，has拦截会报错
+        /*let obj = {a: 10};
+        Object.preventExtensions(obj);
+        let p = new Proxy(obj,{
+            has: function (target,prop) {
+                return false;
+            }
+        });
+        console.log('a' in p);*/
+        //has拦截只对in运算符生效，对for...in循环不生效，
+        //导致不符合要求的属性没有被排除在for...in循环之外
+        /*let stu1 = {name:"admin", score: 99},
+            stu2 = {name:"order", score: 59};
+        let handler = {
+            has: function (target, prop) {
+                if (prop === 'score' && target['score'] < 60){
+                    console.log(`${target.name}不及格`);
+                    return false;
+                }
+                return prop in target;
+            }
+        };
+        let proxy1 = new Proxy(stu1, handler),
+            proxy2 = new Proxy(stu2, handler);
+        console.log('score' in proxy1);
+        console.log('score' in proxy2);
+        for (let a in proxy1){
+            console.log(proxy1[a]);
+        }
+        for (let b in proxy2){
+            console.log(proxy2[b]);
+        }*/
+
+        //construct方法用于拦截new命令
+        /*let p = new Proxy(function () {},{
+            construct: function (target, argArray) {
+                console.log('called: '+ argArray.join(', '));
+                return {value: argArray[0]*10};
+            }
+        });
+        console.log((new p(1)).value);*/
+
+        //deleteProperty方法用于拦截delete操作
+        /*function invariant(key, action) {
+            if (key[0] === '_'){
+                throw new Error(`Invalid attempt to ${action} private "${key}" property`);
+            }
+        }
+        let handler = {
+            deleteProperty: function (target, key) {
+                invariant(key,'delete');
+                return true;
+            }
+        };
+        let target = {_prop:'foo'};
+        let proxy = new Proxy(target, handler);
+        delete proxy._prop;*/
+
+        //defineProperty()
+        /*let handler = {
+            defineProperty: function (target, key, descriptor) {
+                return false;
+            }
+        };
+        let target = {}, p = new Proxy(target, handler);
+        p.foo = 'bar';
+        console.log(p.foo);*/
+
+        //getOwnPropertyDescriptor()拦截Object.getOwnPropertyDescriptor()，返回一个属性描述对象或者undefined
+        /*let handler = {
+            getOwnPropertyDescriptor(target, key){
+                if (key[0] === '_'){
+                    return;
+                }
+                return Object.getOwnPropertyDescriptor(target, key);
+            }
+        };
+        let target = {_foo:'bar', baz:'tar'};
+        let proxy = new Proxy(target, handler);
+        console.log(Object.getOwnPropertyDescriptor(proxy,'wat'));
+        console.log(Object.getOwnPropertyDescriptor(proxy,'_foo'));
+        console.log(Object.getOwnPropertyDescriptor(proxy,'baz'));*/
+
+        //getPrototypeOf()
+        /*let proto = {};
+        let p = new Proxy({},{
+            getPrototypeOf(target){
+                return proto;
+            }
+        });
+        console.log(Object.getPrototypeOf(p) === proto);*/
+
+        //isExtensible()
+        /*let p = new Proxy({},{
+            isExtensible: function (target) {
+                console.log("called");
+                return false;
+            }
+        });
+        console.log(Object.isExtensible(p));*/
+
+        //ownKeys()
+        /*let target = {
+            a: 1,
+            b: 2,
+            c: 3
+        };
+        let handler = {
+            ownKeys(target){
+                return ['a'];
+            }
+        };
+        let proxy = new Proxy(target, handler);
+        console.log(Object.keys(proxy));*/
+
+        //preventExtensions()
+        /*let p = new Proxy({}, {
+            preventExtensions: function (target) {
+                return true;
+            }
+        });
+        console.log(Object.preventExtensions(p));*/
+
+        //setPrototypeOf()
+        /*let handler = {
+            setPrototypeOf(target, proto){
+                throw new Error('Changing the prototype is forbidden');
+            }
+        };
+        let proto = {};
+        let target = function () {};
+        let proxy = new Proxy(target,handler);
+        Object.setPrototypeOf(proxy, proto);*/
+
+        //Proxy.revocable()
+        /*let target = {}, handler = {};
+        let {proxy, revoke} = Proxy.revocable(target, handler);
+        proxy.foo = 123;
+        console.log(proxy.foo);
+        revoke();
+        console.log(proxy.foo);*/
+
+        //this问题
+        let target = new Date('2015-01-01');
+        let handler = {
+            get(target, prop){
+                if (prop === 'getDate'){
+                    return target.getDate.bind(target);
+                }
+                return Reflect.get(target, prop);
+            }
+        };
+        let proxy = new Proxy(target, handler);
+        console.log(proxy.getDate());
+    })()
+</script>
+</body>
+</html>

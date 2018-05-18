@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Set和Map数据结构</title>
+</head>
+<body>
+<script>
+    (function () {
+        //一. Set
+        //1. 基本用法
+        /*let s = new Set();
+        [2,3,5,4,5,2,2].forEach(x => s.add(x));
+        console.log(s);
+        for (let i of s){
+            console.log(i);
+        }
+        let set = new Set([1,2,3,4,4]);
+        console.log(set);
+        console.log(set.size);
+        console.log([...set]);
+        let s = new Set(), a = NaN, b = NaN;
+        s.add(a);
+        s.add(b);
+        s.add({});
+        s.add({});
+        for (let i of s){
+            console.log(i);
+        }*/
+
+        //遍历操作
+        /*let set = new Set(['red','green','blue']);
+        for (let item of set.keys()){
+            console.log(item);
+        }
+        for (let item of set.values()){
+            console.log(item);
+        }
+        for (let item of set.entries()){
+            console.log(item);
+        }*/
+
+        //数组的map和filter方法也可以间接用于 Set
+        /*let set = new Set([1,2,3]);
+        set = new Set([...set].map(x => x*2));
+        console.log(set);
+
+        let s = new Set([1,2,3,4,5]);
+        s = new Set([...s].filter(x => (x%2)==0));
+        console.log(s);*/
+
+        //使用 Set 可很容易地实现并集、交集和差集
+        /*let a = new Set([1,2,3]), b = new Set([4,3,2]);
+        let union = new Set([...a,...b]);
+        let intersect = new Set([...a].filter(x => b.has(x)));
+        let difference = new Set([...a].filter(x => !b.has(x)));*/
+
+        //三. Map
+        //1. 基本用法
+        /*let m = new Map(), o = {p:'Hello World'};
+        m.set(o,'content');
+        console.log(m.get(o));
+        console.log(m.has(o));
+        console.log(m.has({p:'Hello World'}));
+        let items = [
+            ['name','admin'],
+            ['title','Author']
+        ],
+            map = new Map(items);
+        console.log(map.get("name")+":"+map.get("title"));*/
+        let set = new Set([
+            ['foo',1],
+            ['bar',2]
+        ]);
+        let m1 = new Map(set);
+        console.log(m1.get('foo'));
+        let m2 = new Map([['baz',3]]);
+        let m3 = new Map(m2);
+        console.log(m3.get('baz'));
+    })();
+</script>
+</body>
+</html>
