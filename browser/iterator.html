@@ -7,7 +7,84 @@
 <body>
 <script>
     (function () {
-        
+
+        /*let iterable = {
+            0:'a',
+            1:'b',
+            2:'c',
+            length: 3,
+            [Symbol.iterator]: Array.prototype[Symbol.iterator]
+        };
+        for (let i of iterable){
+            console.log(i);
+        }
+        let $iterator = iterable[Symbol.iterator]();
+        let $result = $iterator.next();
+        while (!$result.done){
+            let x = $result.value;
+            console.log("value: "+x);
+            $result = $iterator.next();
+        }
+        let iterable = {
+            a:'a',
+            b:'b',
+            c:'c',
+            length:3,
+            [Symbol.iterator]: Array.prototype[Symbol.iterator]
+        };
+        for (let i of iterable){
+            console.log(i);
+        }*/
+
+        //4. 字符串的 Iterator 接口
+        /*let someStr = 'hi',
+            iterator = someStr[Symbol.iterator]();
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());*/
+
+        /*function readLineSync(file) {
+            return {
+                [Symbol.iterator](){
+                    return {
+                        next() {
+                            console.log("next");
+                            return {done:false};
+                        },
+                        return(){
+                            file.close();
+                            return {done:true};
+                        }
+                    }
+                }
+            }
+        }
+        //触发执行return方法
+        // 情况一
+        for (let line of readLinesSync(fileName)) {
+            console.log(line);
+            break;
+        }
+        // 情况二
+        for (let line of readLinesSync(fileName)) {
+            console.log(line);
+            continue;
+        }
+        // 情况三
+        for (let line of readLinesSync(fileName)) {
+            console.log(line);
+            throw new Error();
+        }*/
+
+        //for...of
+        let arr = ['red', 'green', 'blue'];
+        arr.foo = 'hello';
+        for (let i  in arr){
+            console.log(i);
+        }
+        for (let j of arr){
+            console.log(j);
+        }
     })()
 </script>
 </body>

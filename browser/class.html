@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>class</title>
+</head>
+<body>
+<script>
+    (function () {
+        //类也可以使用表达式的形式定义
+        //这个类的名字是MyClass而不是Me，Me只在 Class 的内部代码可用，指代当前类。
+        //如果类的内部没用到的话，可以省略Me，也就是可以写成下面的形式。
+        /*const MyClass = class Me {
+            getClassName(){
+                return Me.name;
+            }
+        };
+        let inst = new MyClass();
+        console.log(inst.getClassName());
+        console.log(Me.name);*/
+
+        //静态方法
+        //静态方法可以与非静态方法重名。
+        /*class Foo {
+            static bar () {
+                this.baz();
+            }
+            static baz(){
+                console.log('hello');
+            }
+            baz() {
+                console.log("world");
+            }
+        }
+        Foo.bar();*/
+
+        //父类的静态方法，可以被子类继承
+        /*class Foo {
+            static classMethod() {
+                return 'hello';
+            }
+        }
+        class Bar extends Foo {}
+        console.log(Bar.classMethod()+" world");
+        class Bar extends Foo {
+            static classMethod(){
+                return super.classMethod() + " world!";
+            }
+        }
+        console.log(Bar.classMethod());
+        class Foo {
+            constructor(){
+                this.state = 1;
+            }
+            bar () {
+                console.log(this.state);
+            }
+        }
+        let f = new Foo();
+        f.bar();*/
+
+        //new.target 属性
+        /*function Person(name) {
+            if (new.target !== undefined){
+                this.name = name;
+            } else {
+                throw new Error('必须使用 new 命令生成实例');
+            }
+        }
+        /!*function Person(name) {
+            if (new.target === Person){
+                this.name = name;
+            } else {
+                throw new Error('必须使用 new 命令生成实例');
+            }
+        }*!/
+        let person = new Person('admin');
+        let notPerson = Person.call('client');*/
+
+        //不能独立使用、必须继承后才能使用的类
+        /*class Shape {
+            constructor() {
+                if (new.target === Shape){
+                    throw new Error("本类不能实例化...");
+                }
+            }
+        }
+        class Rectangle extends Shape {
+            constructor(length, width){
+                super();
+                this.length = length;
+                this.width = width;
+            }
+            area(){
+                return this.length * this.width;
+            }
+        }
+        //let x = new Shape();
+        let y = new Rectangle(3,4);
+        console.log(y.area());*/
+
+        //继承
+        /*class A {
+            constructor(){
+                console.log(new.target.name);
+            }
+        }
+        class B extends A {
+            constructor(){
+                super();
+            }
+        }
+        new A();
+        new B();
+
+        class A {
+            constructor(){
+                this.x = 1;
+            }
+        }
+        class B extends A {
+            constructor(){
+                super();
+                this.x = 2;
+                super.x  = 3;
+                console.log(super.x);//当读取super.x时读的是A.prototype.x，所以返回undefined。
+                console.log(this.x);
+            }
+        }
+        new B();*/
+
+        class A {}
+        class B extends A{}
+        console.log(B.__proto__ === A);//子类的__proto__属性，表示构造函数的继承，总是指向父类。
+        console.log(B.prototype.__proto__ === A.prototype);//子类prototype属性的__proto__属性，表示方法的继承，总是指向父类的prototype属性。
+
+    })()
+</script>
+</body>
+</html>
